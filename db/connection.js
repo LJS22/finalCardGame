@@ -11,11 +11,11 @@ const mongoDB = `mongodb+srv://${user}:${pass}@${dbCluster}/${dbName}?retryWrite
 mongoose
   .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
   .catch((error) => {
-    handleError(error);
+    console.log(error);
   });
 
 const db = mongoose.connection.on("error", (err) => {
-  handleError(err);
+  console.log(err);
 });
 
 if (!db) {
