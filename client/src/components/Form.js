@@ -16,7 +16,7 @@ class Form extends React.Component {
   };
 
   sendData = async (e) => {
-    const response = await fetch("/cardgameleaderboard/players", {
+    const response = await fetch("/api/cardgameleaderboard/players", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
