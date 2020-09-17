@@ -26,6 +26,7 @@ exports.returnAllPlayers = function (req, res, next) {
       message: "Players retrieved successfully",
       data: players,
     });
+    console.log(players);
 
     return players;
   });
