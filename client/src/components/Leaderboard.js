@@ -13,7 +13,6 @@ class Leaderboard extends Component {
   };
 
   manipulateData = (data) => {
-    console.log(data);
     let players = [];
     for (let i = 0; i < data.data.length; i++) {
       players.push([data.data[i].username, data.data[i].time]);
