@@ -4,6 +4,7 @@ const apiRouter = require("./routes/apiRouter");
 const dbConnection = require("./db/connection");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const path = require("path");
 
 // if (
 //   process.env.NODE_ENV === "production" ||
