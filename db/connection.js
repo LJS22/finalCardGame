@@ -15,7 +15,7 @@ mongoose
   });
 
 const db = mongoose.connection.on("error", (err) => {
-  logError(err);
+  handleError(err);
 });
 
 if (!db) {
