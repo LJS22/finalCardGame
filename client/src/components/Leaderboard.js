@@ -8,7 +8,7 @@ class Leaderboard extends Component {
 
   componentDidMount = async () => {
     await fetch("/cardgameleaderboard/v1/allplayers")
-      .then((response) => response.json())
+      .then((response) => response.text())
       .then((data) => {
         console.log(data);
         this.manipulateData(data);

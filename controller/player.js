@@ -20,6 +20,7 @@ exports.addPlayer = function (req, res, next) {
 
 exports.returnAllPlayers = function (req, res, next) {
   Player.find(function (err, players) {
+    console.log(players);
     if (err) return next(err);
     res.json({
       status: "success",
