@@ -8,11 +8,12 @@ const dbCluster = process.env.DB_CLUSTER;
 
 const mongoDB = `mongodb+srv://${user}:${pass}@${dbCluster}/${dbName}?retryWrites=true&w=majority`;
 
-mongoose
-  .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
-  .catch((error) => {
-    console.log(error);
-  });
+mongoose.connect(mongoDB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  autoIndex: true,
+  useCreateIndex: true,
+});
 
 const db = mongoose.connection.on("error", (err) => {
   console.log(err);
