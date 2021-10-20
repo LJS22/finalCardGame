@@ -22,97 +22,151 @@
 
 		<div id="pageBorder">
 			<div id="cardsContainer">
+
 				<div class="cardContainer cat" data-id="cat">
 					<div class="cardFront"></div>
-					<div class="cardBack"></div>
+					<div class="cardBack">
+						<h3>CLICK ME!</h3>
+					</div>
 				</div>
+
 				<div class="cardContainer cat" data-id="cat">
 					<div class="cardFront"></div>
-					<div class="cardBack"></div>
+					<div class="cardBack">
+						<h3>CLICK ME!</h3>
+					</div>
 				</div>
+
 				<div class="cardContainer dog" data-id="dog">
 					<div class="cardFront"></div>
-					<div class="cardBack"></div>
+					<div class="cardBack">
+						<h3>CLICK ME!</h3>
+					</div>
 				</div>
+
 				<div class="cardContainer dog" data-id="dog">
 					<div class="cardFront"></div>
-					<div class="cardBack"></div>
+					<div class="cardBack">
+						<h3>CLICK ME!</h3>
+					</div>
 				</div>
+
 				<div class="cardContainer elephant" data-id="elephant">
 					<div class="cardFront"></div>
-					<div class="cardBack"></div>
+					<div class="cardBack">
+						<h3>CLICK ME!</h3>
+					</div>
 				</div>
+
 				<div class="cardContainer elephant" data-id="elephant">
 					<div class="cardFront"></div>
-					<div class="cardBack"></div>
+					<div class="cardBack">
+						<h3>CLICK ME!</h3>
+					</div>
 				</div>
+
 				<div class="cardContainer owl" data-id="owl">
 					<div class="cardFront"></div>
-					<div class="cardBack"></div>
+					<div class="cardBack">
+						<h3>CLICK ME!</h3>
+					</div>
 				</div>
+
 				<div class="cardContainer owl" data-id="owl">
 					<div class="cardFront"></div>
-					<div class="cardBack"></div>
+					<div class="cardBack">
+						<h3>CLICK ME!</h3>
+					</div>
 				</div>
+
 				<div class="cardContainer bird" data-id="bird">
 					<div class="cardFront"></div>
-					<div class="cardBack"></div>
+					<div class="cardBack">
+						<h3>CLICK ME!</h3>
+					</div>
 				</div>
+
 				<div class="cardContainer bird" data-id="bird">
 					<div class="cardFront"></div>
-					<div class="cardBack"></div>
+					<div class="cardBack">
+						<h3>CLICK ME!</h3>
+					</div>
 				</div>
+
 				<div class="cardContainer snail" data-id="snail">
 					<div class="cardFront"></div>
-					<div class="cardBack"></div>
+					<div class="cardBack">
+						<h3>CLICK ME!</h3>
+					</div>
 				</div>
+
 				<div class="cardContainer snail" data-id="snail">
 					<div class="cardFront"></div>
-					<div class="cardBack"></div>
+					<div class="cardBack">
+						<h3>CLICK ME!</h3>
+					</div>
 				</div>
-				<div class="cardContainer beaver" data-id="beaver">
-					<div class="cardFront"></div>
-					<div class="cardBack"></div>
-				</div>
-				<div class="cardContainer beaver" data-id="beaver">
-					<div class="cardFront"></div>
-					<div class="cardBack"></div>
-				</div>
-				<div class="cardContainer sheep" data-id="sheep">
-					<div class="cardFront"></div>
-					<div class="cardBack"></div>
-				</div>
-				<div class="cardContainer sheep" data-id="sheep">
-					<div class="cardFront"></div>
-					<div class="cardBack"></div>
+
+					<div class="cardContainer beaver" data-id="beaver">
+						<div class="cardFront"></div>
+						<div class="cardBack">
+							<h3>CLICK ME!</h3>
+						</div>
+					</div>
+
+					<div class="cardContainer beaver" data-id="beaver">
+						<div class="cardFront"></div>
+						<div class="cardBack">
+							<h3>CLICK ME!</h3>
+						</div>
+					</div>
+					
+					<div class="cardContainer sheep" data-id="sheep">
+						<div class="cardFront"></div>
+						<div class="cardBack">
+							<h3>CLICK ME!</h3>
+						</div>
+					</div>
+
+					<div class="cardContainer sheep" data-id="sheep">
+						<div class="cardFront"></div>
+						<div class="cardBack">
+							<h3>CLICK ME!</h3>
+						</div>
+					</div>
+
 				</div>
 			</div>
 		</div>
 
 		<span id="settingsButton"> </span>
+		<span id="volumeOn"> </span>
+		<span id="volumeOff"> </span>
 
 		<div class="overlay" id="rules" style="display: none">
+			<span class="material-icons closeButton"> cancel </span>
 			<h2>The Rules</h2>
-			<ul>
-				<li>Click on a card to flip it over</li>
-				<li>Match all the cards before the timer runs out to win</li>
-				<li>Open up settings to change the timer</li>
-			</ul>
+			<p>Click on a card to find the animal</p>
+			<p>Match the animals before the timer runs out to win</p>
+			<p>Open up settings to change the timer</p>
 		</div>
 
 		<div class="overlay" id="settings" style="display: none">
+			<span class="material-icons closeButton"> cancel </span>
 			<h2>Type in the number of seconds you want</h2>
 			<input type="text" maxlength="2" />
 			<button id="editTime">ENTER</button>
 		</div>
 
 		<div class="overlay" id="won" style="display: none">
+			<span class="material-icons closeButton"> cancel </span>
 			<h2>CONGRATULATIONS!</h2>
 			<h3>YOU BEAT THE GAME</h3>
 			<p>Open settings to set a harder challenge</p>
 		</div>
 
 		<div class="overlay" id="lost" style="display: none">
+			<span class="material-icons closeButton"> cancel </span>
 			<h2>UNLUCKY!</h2>
 			<h3>YOU NEARLY BEAT THE GAME</h3>
 			<p>Open settings to set a harder challenge</p>

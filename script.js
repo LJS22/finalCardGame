@@ -1,5 +1,13 @@
-var gameHasStarted = false;
-var interval;
+var gameHasStarted = false,
+	backgroundMusic = new Audio('audio/backgroundMusic.mp3'),
+	victoryMusic = new Audio('audio/victoryMusic.mp3'),
+	failureMusic = new Audio('audio/failureMusic.mp3'),
+	numberOfCards = 16,
+	musicOn = true,
+	interval,
+	firstFlippedCard,
+	secondFlippedCard,
+	initialTimer;
 
 function randomiseCards() {
 	var cardContainerArray = $('.cardContainer').toArray();
@@ -7,42 +15,63 @@ function randomiseCards() {
 	while (cardContainerArray.length > 0) {
 		var idx = Math.floor(Math.random() * (cardContainerArray.length - 1));
 		var element = cardContainerArray.splice(idx, 1);
+
+		if ($(element).hasClass('flipped')) {
+			$(element).removeClass('flipped');
+		}
+		$(element).find('.cardBack').attr('style', '');
+
 		$('#cardsContainer').append(element[0]);
 	}
 }
 
 randomiseCards();
 
-$('.cardFront').on('click', function () {
+$('.cardBack').on('click', function () {
 	if (gameHasStarted === false) {
+		initialTimer = $('#timer p').text();
 		gameHasStarted = true;
 		startTimer();
-		//play game music
 	}
 
-	$(this).parent().addClass('flipped');
-
 	let currentFlippedCards = $('.cardContainer.flipped');
-	if (currentFlippedCards.length == 2) {
-		if (
-			$(currentFlippedCards[0]).attr('data-id') ===
-			$(currentFlippedCards[1]).attr('data-id')
-		) {
-			//play win music
-			currentFlippedCards.fadeTo(500, 0, function () {
-				$(this).css('visibility', 'hidden');
-			});
 
-			let numberOfCardsLeft = $('.cardContainer:visible').length - 2;
-			if (numberOfCardsLeft === 0) {
+	if (currentFlippedCards.length <= 1) {
+		$(this).parent().addClass('flipped');
+	}
+
+	if (currentFlippedCards.length == 0) {
+		firstFlippedCard = $(this);
+	} else if (currentFlippedCards.length == 1) {
+		secondFlippedCard = $(this);
+
+		setTimeout(() => {
+			firstFlippedCard.parent().removeClass('flipped');
+			secondFlippedCard.parent().removeClass('flipped');
+		}, 800);
+
+		if (
+			firstFlippedCard.parent().attr('data-id') ===
+			secondFlippedCard.parent().attr('data-id')
+		) {
+			numberOfCards = numberOfCards - 2;
+
+			if (numberOfCards === 0) {
 				handleGameOver();
 			}
+
+			firstFlippedCard.fadeTo(500, 0, function () {
+				$(this).css('visibility', 'hidden');
+			});
+			secondFlippedCard.fadeTo(500, 0, function () {
+				$(this).css('visibility', 'hidden');
+			});
 		}
-		$('.cardContainer.flipped').removeClass('flipped');
 	}
 });
 
 function startTimer() {
+	musicOn ? backgroundMusic.play() : null;
 	let seconds = parseInt($('#timer p').text());
 
 	interval = setInterval(function () {
@@ -60,18 +89,26 @@ function startTimer() {
 }
 
 function handleGameOver() {
-	let timer = parseInt($('#timer p').text());
+	gameHasStarted = false;
 
-	let numberOfCardsLeft = $('.cardContainer:visible').length;
-
-	if (timer > 0 && numberOfCardsLeft === 0) {
-		$('#won').show();
-		return;
-	} else {
-		$('#lost').show();
+	if (backgroundMusic.paused === false) {
+		backgroundMusic.pause();
+		backgroundMusic.currentTime = 0;
 	}
 
+	let timer = parseInt($('#timer p').text());
+
 	clearInterval(interval);
+
+	if (timer >= 0 && numberOfCards === 0) {
+		musicOn ? victoryMusic.play() : null;
+		$('#won').show();
+		return;
+	}
+	musicOn ? failureMusic.play() : null;
+	$('#lost').show();
+
+	numberOfCards = 16;
 }
 
 $('#titleSection > p').on('click', function () {
@@ -79,14 +116,63 @@ $('#titleSection > p').on('click', function () {
 });
 
 $('#settingsButton').on('click', function () {
+	$('.overlay:visible').hide();
+	clearInterval(interval);
 	$('.overlay#settings').show();
 });
 
 $('#editTime').on('click', function () {
 	let inputValue = $('.overlay#settings input').val();
+
 	if (inputValue.length !== 0) {
 		$('#titleSection #timer p').text(inputValue);
 
 		$('.overlay#settings').hide();
+
+		randomiseCards();
+	}
+});
+
+$('.closeButton').on('click', function () {
+	if ($(this).parent().attr('id') == 'settings') {
+		if (gameHasStarted) {
+			startTimer();
+		} else {
+			if (initialTimer != undefined) {
+				$('#timer p').text(initialTimer);
+			}
+			randomiseCards();
+		}
+	} else {
+		randomiseCards();
+		$('#timer p').text(initialTimer);
+	}
+	$('.overlay:visible').hide();
+});
+
+$('#volumeOn').on('click', function () {
+	$(this).hide();
+	$('#volumeOff').show();
+	musicOn = false;
+
+	if (backgroundMusic.paused === false) {
+		backgroundMusic.pause();
+		backgroundMusic.currentTime = 0;
+	}
+});
+
+$('#volumeOff').on('click', function () {
+	$(this).hide();
+	$('#volumeOn').show();
+	musicOn = true;
+
+	if (backgroundMusic.paused && gameHasStarted) {
+		backgroundMusic.play();
+	}
+});
+
+backgroundMusic.addEventListener('ended', function () {
+	if (gameHasStarted) {
+		backgroundMusic.play();
 	}
 });
