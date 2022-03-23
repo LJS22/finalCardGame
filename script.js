@@ -7,7 +7,7 @@ var gameHasStarted = false,
 	interval,
 	firstFlippedCard,
 	secondFlippedCard,
-	initialTimer;
+	initialTimeInSeconds;
 
 function randomiseCards() {
 	var cardContainerArray = $('.cardContainer').toArray();
@@ -28,8 +28,16 @@ function randomiseCards() {
 randomiseCards();
 
 $('.cardBack').on('click', function () {
+	if ($('.overlay').is(':visible')) {
+		$('.overlay:visible').addClass('shake');
+		setTimeout(function () {
+			$('.overlay:visible').removeClass('shake');
+		}, 1000);
+		return;
+	}
+
 	if (gameHasStarted === false) {
-		initialTimer = $('#timer p').text();
+		initialTimeInSeconds = $('#timer p').text();
 		gameHasStarted = true;
 		startTimer();
 	}
@@ -77,14 +85,14 @@ function startTimer() {
 	interval = setInterval(function () {
 		seconds--;
 
-		if (seconds === 0) {
-			clearInterval(interval);
-			handleGameOver();
-		}
-
 		seconds = seconds.toString().length === 1 ? '0' + seconds : seconds;
 
 		$('#timer p').text(seconds);
+
+		if ($('#timer p').text() === '00') {
+			handleGameOver();
+			clearInterval(interval);
+		}
 	}, 1000);
 }
 
@@ -96,17 +104,17 @@ function handleGameOver() {
 		backgroundMusic.currentTime = 0;
 	}
 
-	let timer = parseInt($('#timer p').text());
+	let secondsLeftInGame = parseInt($('#timer p').text());
 
 	clearInterval(interval);
 
-	if (timer >= 0 && numberOfCards === 0) {
+	if (secondsLeftInGame >= 0 && numberOfCards === 0) {
 		musicOn ? victoryMusic.play() : null;
 		$('#won').show();
-		return;
+	} else {
+		musicOn ? failureMusic.play() : null;
+		$('#lost').show();
 	}
-	musicOn ? failureMusic.play() : null;
-	$('#lost').show();
 
 	numberOfCards = 16;
 }
@@ -134,18 +142,19 @@ $('#editTime').on('click', function () {
 });
 
 $('.closeButton').on('click', function () {
+	$('.cardContainer.flipped').removeClass('flipped');
 	if ($(this).parent().attr('id') == 'settings') {
 		if (gameHasStarted) {
 			startTimer();
 		} else {
-			if (initialTimer != undefined) {
-				$('#timer p').text(initialTimer);
+			if (initialTimeInSeconds != undefined) {
+				$('#timer p').text(initialTimeInSeconds);
 			}
 			randomiseCards();
 		}
 	} else {
 		randomiseCards();
-		$('#timer p').text(initialTimer);
+		$('#timer p').text(initialTimeInSeconds);
 	}
 	$('.overlay:visible').hide();
 });
